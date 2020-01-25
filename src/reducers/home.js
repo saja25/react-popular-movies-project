@@ -1,4 +1,5 @@
 import {
+  FETCH_MOVIES,
   FETCH_MOVIES_SUCCESS,
   FETCH_MOVIES_FAILURE,
   SEARCH_MOVIE,
@@ -27,15 +28,18 @@ const initState = {
   selectedLanguage: settings.selectedLanguage || LANGUAGES.ENGLISH,
   configsLoaded: false,
   genresLoaded: false,
-  showSettings: false
+  showSettings: false,
+  isLoadingMovies:false
 };
 
 export default (state = initState, action) => {
   switch (action.type) {
+    case FETCH_MOVIES:
+      return {...state,isLoadingMovies:true};
     case FETCH_MOVIES_SUCCESS:
-      return { ...state, movies: action.data };
+      return { ...state, movies: action.data,isLoadingMovies:false };
     case FETCH_MOVIES_FAILURE:
-      return { ...state, error: action.error };
+      return { ...state, error: action.error ,isLoadingMovies:false};
     case SEARCH_MOVIE:
       return {
         ...state,
